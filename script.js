@@ -746,13 +746,13 @@ function initChatWidget() {
         // Keep history short to avoid payload issues
         if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
       } else {
-        appendMessage("Sorry, I'm having trouble connecting right now. Please try again later.", "bot");
-        console.error(data.error);
+        appendMessage("Error: " + (data.error || "Failed to connect"), "bot");
+        console.error(data);
       }
 
     } catch (error) {
       document.getElementById(typingId)?.remove();
-      appendMessage("Network error. Please try again later.", "bot");
+      appendMessage("Error: " + error.message, "bot");
       console.error("Fetch Error:", error);
     }
   }
