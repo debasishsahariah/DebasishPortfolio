@@ -189,7 +189,7 @@ const portfolioItems = [
     client: "Private Client",
     category: "Cinematic Walkthrough",
     thumbnail: "images/video-thumb-01.png",
-    videoUrl: "",
+    videoUrl: "https://drive.google.com/file/d/1s04tmkOHLcIvfQEOXRPI-A8kNCJzqyUm/view?usp=drive_link",
     description: "Cinematic architectural walkthrough of a luxury penthouse with panoramic views.",
   },
   {
