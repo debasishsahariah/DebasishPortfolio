@@ -534,6 +534,8 @@ function openVideoModal(id) {
       video.src = item.videoUrl;
       video.controls = true;
       video.autoplay = true;
+      video.setAttribute("controlsList", "nodownload");
+      video.oncontextmenu = (e) => e.preventDefault(); // Prevent right-click to "Save Video As"
       contentContainer.appendChild(video);
     }
   } else {
