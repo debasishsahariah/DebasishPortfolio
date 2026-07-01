@@ -763,14 +763,16 @@ button {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
-.portfolio-item img {
+.portfolio-item img,
+.portfolio-item video.video-thumbnail {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition-slow), filter var(--transition-slow);
 }
 
-.portfolio-item:hover img {
+.portfolio-item:hover img,
+.portfolio-item:hover video.video-thumbnail {
   transform: scale(1.05);
   filter: brightness(0.7);
 }

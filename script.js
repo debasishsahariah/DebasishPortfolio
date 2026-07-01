@@ -353,7 +353,7 @@ function createVideoCard(item) {
   return `
     <div class="portfolio-item video-item" data-id="${item.id}" data-type="video">
       <span class="client-badge">Client Work</span>
-      <img src="${item.thumbnail}" alt="${item.title}" loading="lazy" />
+      <video class="video-thumbnail" src="${item.videoUrl}#t=0.001" muted loop playsinline preload="metadata"></video>
       <div class="play-button">
         <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"></polygon></svg>
       </div>
@@ -376,8 +376,14 @@ function attachPortfolioEvents() {
     });
   });
 
-  // Video items — open video modal
+  // Video items — open video modal and play on hover
   document.querySelectorAll(".portfolio-item.video-item").forEach((el) => {
+    const video = el.querySelector("video");
+    if (video) {
+      el.addEventListener("mouseenter", () => { video.play().catch(()=>{}); });
+      el.addEventListener("mouseleave", () => { video.pause(); });
+    }
+
     el.addEventListener("click", () => {
       const id = parseInt(el.dataset.id);
       openVideoModal(id);
