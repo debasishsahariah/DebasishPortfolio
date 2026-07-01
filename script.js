@@ -199,7 +199,7 @@ const portfolioItems = [
     client: "Bacardi",
     category: "Product Commercial",
     thumbnail: "images/video-thumb-02.png",
-    videoUrl: "",
+    videoUrl: "videos/Sequence 02.mp4",
     description: "High-end product commercial with dynamic lighting and particle effects.",
   },
   {
@@ -209,7 +209,7 @@ const portfolioItems = [
     client: "Mercedes",
     category: "Automotive Commercial",
     thumbnail: "images/video-thumb-03.png",
-    videoUrl: "",
+    videoUrl: "videos/Sequence 03.mp4",
     description: "Cinematic automotive commercial with dramatic lighting and motion effects.",
   },
   {
@@ -219,7 +219,7 @@ const portfolioItems = [
     client: "GOBBG",
     category: "Brand Film",
     thumbnail: "images/video-thumb-01.png",
-    videoUrl: "",
+    videoUrl: "videos/Sequence 04.mp4",
     description: "Narrative brand film combining 3D elements with motion graphics.",
   },
   {
@@ -229,7 +229,7 @@ const portfolioItems = [
     client: "Becker Robotics",
     category: "Explainer / Motion Graphics",
     thumbnail: "images/video-thumb-02.png",
-    videoUrl: "",
+    videoUrl: "videos/Sequence 05.mp4",
     description: "Technical explainer video showcasing robotic systems and capabilities.",
   },
 ];
