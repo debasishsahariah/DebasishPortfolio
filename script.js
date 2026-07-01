@@ -185,12 +185,12 @@ const portfolioItems = [
   {
     id: 21,
     type: "video",
-    title: "Architectural Walkthrough",
+    title: "Functionality Walkthrough",
     client: "Private Client",
     category: "Cinematic Walkthrough",
     thumbnail: "images/video-thumb-01.png",
-    videoUrl: "https://drive.google.com/file/d/1s04tmkOHLcIvfQEOXRPI-A8kNCJzqyUm/view?usp=drive_link",
-    description: "Cinematic architectural walkthrough of a luxury penthouse with panoramic views.",
+    videoUrl: "videos/Sequence 01.mp4",
+    description: "Cinematic product function showcase video.",
   },
   {
     id: 22,
