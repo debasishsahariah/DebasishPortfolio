@@ -107,10 +107,10 @@ const portfolioItems = [
   {
     id: 103,
     type: "personal",
-    title: "Wireless Earphones E-Commerce",
-    category: "Product Visualization",
+    title: "Noise Open-Ear Campaign",
+    category: "Commercial & Advertising",
     images: ["images/personal-13-1.jpg", "images/personal-13-2.jpg", "images/personal-13-3.jpg", "images/personal-13-4.jpg"],
-    description: "A crisp, photorealistic 3D product visualization of wireless earphones designed specifically for e-commerce. Showcasing sleek materials and clean studio lighting to highlight the product's premium build quality and ergonomic design.",
+    description: "A high-end commercial 3D campaign designed for Noise wireless open-ear headphones. This project features photorealistic product renders showcasing the iridescent design accents, set against dramatic studio lighting and premium typography for e-commerce and social media marketing.",
   },
 
   // --- CLIENT PROJECTS ---
