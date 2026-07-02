@@ -104,6 +104,14 @@ const portfolioItems = [
     images: ["images/personal-12-1.jpg", "images/personal-12-2.jpg", "images/personal-12-3.jpg", "images/personal-12-4.jpg"],
     description: "A highly photorealistic fashion render showcasing an emerald and diamond halo earring. This scene utilizes a combination of 3D modeling and AI generation to achieve soft, ethereal lighting that highlights the model and the intricate jewelry details.",
   },
+  {
+    id: 103,
+    type: "personal",
+    title: "Wireless Earphones E-Commerce",
+    category: "Product Visualization",
+    images: ["images/personal-13-1.jpg", "images/personal-13-2.jpg", "images/personal-13-3.jpg", "images/personal-13-4.jpg"],
+    description: "A crisp, photorealistic 3D product visualization of wireless earphones designed specifically for e-commerce. Showcasing sleek materials and clean studio lighting to highlight the product's premium build quality and ergonomic design.",
+  },
 
   // --- CLIENT PROJECTS ---
   {
