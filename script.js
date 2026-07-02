@@ -164,7 +164,7 @@ const portfolioItems = [
     id: 17,
     type: "client",
     title: "Product Showcase",
-    client: "Electronic Gadgets Brand",
+    client: "Electronics Brand",
     category: "Product Listing Image",
     image: "images/client-07.jpg",
     description: "Powerbank with mulitple charging capabilities.",
