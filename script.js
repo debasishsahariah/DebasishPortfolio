@@ -241,12 +241,12 @@ const portfolioItems = [
   {
     id: 25,
     type: "video",
-    title: "Explainer Video",
-    client: "Becker Robotics",
-    category: "Explainer / Motion Graphics",
+    title: "Product Ad Video",
+    client: "food manufacturer",
+    category: "Ad campaign video",
     thumbnail: "images/video-thumb-02.png",
     videoUrl: "videos/Sequence 05.mp4",
-    description: "Technical explainer video showcasing robotic systems and capabilities.",
+    description: "Product advertisement taargeted for kids.",
   },
 ];
 
