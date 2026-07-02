@@ -91,18 +91,18 @@ const portfolioItems = [
   {
     id: 101,
     type: "personal",
-    title: "Project Alpha",
-    category: "Concept Art",
-    images: ["images/personal-11-1.png", "images/personal-11-2.png", "images/personal-11-3.png", "images/personal-11-4.png"],
-    description: "A comprehensive exploration of conceptual art spanning four different perspectives.",
+    title: "Snitch Mercury Fragrance",
+    category: "Product Visualization",
+    images: ["images/personal-11-1.jpg", "images/personal-11-2.jpg", "images/personal-11-3.jpg", "images/personal-11-4.jpg"],
+    description: "A striking, moody product visualization for 'Snitch Mercury Pour Homme' Eau De Parfum. Created using a hybrid workflow of 3D software and AI tools, rendering dark, raw slate textures and gold dust accents to convey luxury and masculinity.",
   },
   {
     id: 102,
     type: "personal",
-    title: "Project Beta",
-    category: "Character Design",
-    images: ["images/personal-12-1.png", "images/personal-12-2.png", "images/personal-12-3.png", "images/personal-12-4.png"],
-    description: "In-depth character design showcases featuring multiple angles and lighting scenarios.",
+    title: "Emerald Elegance Jewelry",
+    category: "Fashion & Lifestyle",
+    images: ["images/personal-12-1.jpg", "images/personal-12-2.jpg", "images/personal-12-3.jpg", "images/personal-12-4.jpg"],
+    description: "A highly photorealistic fashion render showcasing an emerald and diamond halo earring. This scene utilizes a combination of 3D modeling and AI generation to achieve soft, ethereal lighting that highlights the model and the intricate jewelry details.",
   },
 
   // --- CLIENT PROJECTS ---
