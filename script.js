@@ -88,6 +88,22 @@ const portfolioItems = [
     image: "images/personal-10.png",
     description: "Eclectic and colorful dining/living area with an arched alcove shelving display, pastel pink walls, and vibrant glassware.",
   },
+  {
+    id: 101,
+    type: "personal",
+    title: "Project Alpha",
+    category: "Concept Art",
+    images: ["images/personal-11-1.png", "images/personal-11-2.png", "images/personal-11-3.png", "images/personal-11-4.png"],
+    description: "A comprehensive exploration of conceptual art spanning four different perspectives.",
+  },
+  {
+    id: 102,
+    type: "personal",
+    title: "Project Beta",
+    category: "Character Design",
+    images: ["images/personal-12-1.png", "images/personal-12-2.png", "images/personal-12-3.png", "images/personal-12-4.png"],
+    description: "In-depth character design showcases featuring multiple angles and lighting scenarios.",
+  },
 
   // --- CLIENT PROJECTS ---
   {
@@ -335,10 +351,26 @@ function createImageCard(item) {
     ? `<p class="portfolio-copyright">© ${item.client}. All rights reserved.</p>`
     : "";
 
+  let mediaHTML = "";
+  if (item.images && item.images.length > 1) {
+    mediaHTML = `
+      <div class="card-carousel">
+        ${item.images.map((img, idx) => `<img src="${img}" alt="${item.title} ${idx+1}" loading="lazy" class="${idx === 0 ? 'active' : ''}" />`).join("")}
+        <button class="card-carousel-btn prev" aria-label="Previous image">‹</button>
+        <button class="card-carousel-btn next" aria-label="Next image">›</button>
+        <div class="card-carousel-indicators">
+          ${item.images.map((_, idx) => `<span class="indicator ${idx === 0 ? 'active' : ''}"></span>`).join("")}
+        </div>
+      </div>
+    `;
+  } else {
+    mediaHTML = `<img src="${item.image}" alt="${item.title}" loading="lazy" />`;
+  }
+
   return `
     <div class="portfolio-item" data-id="${item.id}" data-type="${item.type}">
       ${badgeHTML}
-      <img src="${item.image}" alt="${item.title}" loading="lazy" />
+      ${mediaHTML}
       <div class="portfolio-overlay">
         <span class="portfolio-tag">${item.category}</span>
         <h3 class="portfolio-item-title">${item.title}</h3>
@@ -368,8 +400,40 @@ function createVideoCard(item) {
 }
 
 function attachPortfolioEvents() {
-  // Image items — open lightbox
+  // Image items — open lightbox & handle carousel
   document.querySelectorAll('.portfolio-item:not(.video-item)').forEach((el) => {
+    
+    // Setup carousel logic if it exists
+    const prevBtn = el.querySelector(".card-carousel-btn.prev");
+    const nextBtn = el.querySelector(".card-carousel-btn.next");
+    if (prevBtn && nextBtn) {
+      const images = el.querySelectorAll(".card-carousel img");
+      const indicators = el.querySelectorAll(".card-carousel-indicators .indicator");
+      let currentIndex = 0;
+
+      const updateCarousel = (newIndex) => {
+        images[currentIndex].classList.remove("active");
+        indicators[currentIndex].classList.remove("active");
+        currentIndex = newIndex;
+        images[currentIndex].classList.add("active");
+        indicators[currentIndex].classList.add("active");
+      };
+
+      prevBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        let newIndex = currentIndex - 1;
+        if (newIndex < 0) newIndex = images.length - 1;
+        updateCarousel(newIndex);
+      });
+
+      nextBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        let newIndex = currentIndex + 1;
+        if (newIndex >= images.length) newIndex = 0;
+        updateCarousel(newIndex);
+      });
+    }
+
     el.addEventListener("click", () => {
       const id = parseInt(el.dataset.id);
       openLightbox(id);
@@ -446,11 +510,20 @@ function openLightbox(id) {
 
   // Get current filtered non-video items
   const activeFilter = document.querySelector(".filter-btn.active")?.dataset.filter || "all";
-  currentLightboxItems = portfolioItems.filter(
-    (item) => item.type !== "video" && (activeFilter === "all" || item.type === activeFilter)
-  );
+  
+  currentLightboxItems = [];
+  portfolioItems.filter(item => item.type !== "video" && (activeFilter === "all" || item.type === activeFilter))
+    .forEach(item => {
+      if (item.images && item.images.length > 0) {
+        item.images.forEach((imgSrc, index) => {
+           currentLightboxItems.push({ ...item, image: imgSrc, lightboxTitle: `${item.title} (${index + 1}/${item.images.length})`, originalId: item.id });
+        });
+      } else {
+        currentLightboxItems.push({ ...item, lightboxTitle: item.title, originalId: item.id });
+      }
+    });
 
-  currentLightboxIndex = currentLightboxItems.findIndex((item) => item.id === id);
+  currentLightboxIndex = currentLightboxItems.findIndex((item) => item.originalId === id);
   if (currentLightboxIndex === -1) return;
 
   updateLightboxContent();
@@ -477,8 +550,8 @@ function updateLightboxContent() {
 
   const lightbox = document.getElementById("lightbox");
   lightbox.querySelector(".lightbox-img").src = item.image;
-  lightbox.querySelector(".lightbox-img").alt = item.title;
-  lightbox.querySelector(".lightbox-title").textContent = item.title;
+  lightbox.querySelector(".lightbox-img").alt = item.lightboxTitle;
+  lightbox.querySelector(".lightbox-title").textContent = item.lightboxTitle;
   lightbox.querySelector(".lightbox-desc").textContent = item.description;
 
   const copyrightEl = lightbox.querySelector(".lightbox-copyright");
