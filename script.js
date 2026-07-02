@@ -163,7 +163,7 @@ const portfolioItems = [
   {
     id: 17,
     type: "client",
-    title: "Winter House Exterior",
+    title: "Product Showcase",
     client: "Electronic Gadgets Brand",
     category: "Product Listing Image",
     image: "images/client-07.jpg",
