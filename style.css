@@ -1915,7 +1915,245 @@ button {
     justify-self: center;
   }
 
-  .footer-links {
     justify-self: center;
   }
+}
+
+/* ============================================================
+   PREMIUM FEATURES & EFFECTS
+   ============================================================ */
+
+/* 1. Custom Cursor */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  
+  a, button, .portfolio-item, .card-carousel-btn, .lightbox-nav, .lightbox-close, .video-modal-close, .nav-toggle {
+    cursor: none;
+  }
+  
+  .cursor-dot, .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 999999;
+    pointer-events: none;
+  }
+  
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--gold-primary);
+    transition: opacity 0.2s ease;
+  }
+  
+  .cursor-ring {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--gold-primary);
+    transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease-out;
+  }
+  
+  /* Cursor Hover States */
+  .cursor-ring.hover {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(196, 162, 101, 0.1);
+    border-color: transparent;
+  }
+  
+  .cursor-ring.hover-view {
+    width: 80px;
+    height: 80px;
+    background-color: var(--gold-primary);
+    border-color: transparent;
+  }
+  
+  .cursor-ring.hover-view::after {
+    content: "VIEW";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--bg-primary);
+    letter-spacing: 1px;
+  }
+  
+  .cursor-dot.hover-view {
+    opacity: 0;
+  }
+}
+
+/* 2. Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary), var(--gold-accent));
+  z-index: 10000;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* 3. Scroll Animated Gradient */
+.scroll-gradient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle at var(--grad-x, 50%) var(--grad-y, 0%), rgba(196, 162, 101, 0.25) 0%, transparent 50%);
+  pointer-events: none;
+  opacity: 0.8;
+  mix-blend-mode: screen;
+}
+
+
+/* 4. Client Marquee */
+.clients {
+  overflow: hidden;
+}
+
+.marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  padding: 20px 0;
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  white-space: nowrap;
+  animation: marquee-scroll 25s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all var(--transition-base);
+}
+
+.marquee-item:hover {
+  color: var(--gold-primary);
+  -webkit-text-stroke: 1px var(--gold-primary);
+}
+
+.marquee-separator {
+  color: var(--gold-primary);
+  font-size: 1rem;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+
+/* 5. Lenis Scroll setup */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* 6. Text Split & Reveal Animations */
+.split-line {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.split-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%);
+  will-change: transform, opacity;
+}
+
+.split-char.revealed {
+  animation: split-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes split-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+/* 7. Image Reveal Mask */
+.reveal-mask {
+  position: relative;
+  overflow: hidden;
+}
+
+.reveal-mask::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--gold-primary);
+  transform-origin: right;
+  transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 2;
+}
+
+.reveal-mask.revealed::after {
+  transform: scaleX(0);
+}
+
+.reveal-mask img {
+  transform: scale(1.2);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+
+.reveal-mask.revealed img {
+  transform: scale(1);
+}
+
+/* 8. 3D Tilt Cards */
+.tilt-card {
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+}
+
+.tilt-content {
+  transform: translateZ(30px);
+}
+
+/* Magnetic Buttons Fixes */
+.hero-cta, .contact-btn, .nav-cta {
+  display: inline-block; /* Helps with transform */
+  will-change: transform;
 }

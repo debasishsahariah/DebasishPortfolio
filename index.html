@@ -24,6 +24,13 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
   <!-- ============================================================
        PRELOADER
        ============================================================ -->
@@ -41,6 +48,7 @@
   <!-- ============================================================
        DYNAMIC BACKGROUND
        ============================================================ -->
+  <div class="scroll-gradient" id="scroll-gradient"></div>
   <div class="dynamic-bg">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -103,13 +111,33 @@
   <section class="clients" id="clients">
     <div class="container">
       <p class="clients-label">Contributed on projects from industry leaders</p>
-      <div class="clients-grid">
-        <span class="client-logo">Lowe's</span>
-        <span class="client-logo">Walmart</span>
-        <span class="client-logo">Mercedes</span>
-        <span class="client-logo">Becker Robotics</span>
-        <span class="client-logo">Bacardi</span>
-        <span class="client-logo">GOBBG</span>
+    </div>
+    <div class="marquee">
+      <div class="marquee-track">
+        <span class="marquee-item">Lowe's</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">Walmart</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">Mercedes</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">Becker Robotics</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">Bacardi</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">GOBBG</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">Lowe's</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">Walmart</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">Mercedes</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">Becker Robotics</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">Bacardi</span>
+        <span class="marquee-separator">◆</span>
+        <span class="marquee-item">GOBBG</span>
+        <span class="marquee-separator">◆</span>
       </div>
     </div>
   </section>
@@ -185,7 +213,7 @@
     <div class="container">
       <div class="section-header reveal">
         <span class="section-label">What I Do</span>
-        <h2 class="section-title">Expertise & <em>Services</em></h2>
+        <h2 class="section-title">Expertise & Services</h2>
       </div>
       <div class="services-grid">
         <!-- Service 1 -->
@@ -379,6 +407,9 @@
   </div>
 
 
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 
   <!-- Scripts -->
   <script src="script.js"></script>

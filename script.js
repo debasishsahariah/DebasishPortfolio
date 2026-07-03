@@ -270,7 +270,16 @@ document.addEventListener("DOMContentLoaded", () => {
   initLightbox();
   initVideoModal();
   initScrollAnimations();
-  initSmoothScroll();
+  initSmoothScroll(); // Keeping existing smooth scroll for anchor links
+  
+  // Premium Features
+  initPremiumScroll(); // Lenis
+  initCustomCursor();
+  initMagneticButtons();
+  init3DTiltCards();
+  initTextReveal();
+  initImageReveal();
+  initAnimatedCounters();
 });
 
 // ============================================================
@@ -850,4 +859,306 @@ function initPreloader() {
 
   // Start the progress animation
   requestAnimationFrame(updateProgress);
+}
+
+// ============================================================
+// PREMIUM FEATURES (JS LOGIC)
+// ============================================================
+
+// 1. & 2. Lenis Smooth Scroll & Scroll Progress
+function initPremiumScroll() {
+  if (typeof Lenis !== 'undefined') {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    // Get scroll progress elements
+    const progressBar = document.getElementById('scroll-progress');
+    const scrollGradient = document.getElementById('scroll-gradient');
+
+    // RAF loop
+    function raf(time) {
+      lenis.raf(time);
+      
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = window.scrollY;
+      const progress = (scrolled / docHeight) || 0; // 0 to 1
+      
+      // Update progress bar
+      if (progressBar) {
+        progressBar.style.transform = `scaleX(${progress})`;
+      }
+      
+      // Update scroll animated gradient
+      if (scrollGradient) {
+        // Create an organic moving effect
+        // X moves back and forth in a sine wave as you scroll down
+        const x = 50 + Math.sin(progress * Math.PI * 4) * 30; // oscillates between 20% and 80%
+        // Y moves downwards linearly from 0% to 100%
+        const y = progress * 100;
+        
+        scrollGradient.style.setProperty('--grad-x', `${x}%`);
+        scrollGradient.style.setProperty('--grad-y', `${y}%`);
+      }
+      
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+  }
+}
+
+// 3. Custom Cursor
+function initCustomCursor() {
+  if (window.matchMedia("(pointer: coarse)").matches) return; // Skip on touch devices
+
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  
+  if (!dot || !ring) return;
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let ringX = mouseX;
+  let ringY = mouseY;
+  let isHovering = false;
+  let isHoveringView = false;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    // Instantly move the dot
+    dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+  });
+
+  // Smooth interpolation for the ring
+  function renderCursor() {
+    ringX += (mouseX - ringX) * 0.15;
+    ringY += (mouseY - ringY) * 0.15;
+    
+    ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
+    requestAnimationFrame(renderCursor);
+  }
+  requestAnimationFrame(renderCursor);
+
+  // Hover states for interactive elements
+  const interactables = document.querySelectorAll('a, button, .nav-toggle');
+  interactables.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      isHovering = true;
+      ring.classList.add('hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      isHovering = false;
+      ring.classList.remove('hover');
+    });
+  });
+
+  // Special "VIEW" hover state for portfolio items
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+  portfolioItems.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      isHoveringView = true;
+      ring.classList.add('hover-view');
+      dot.classList.add('hover-view');
+    });
+    el.addEventListener('mouseleave', () => {
+      isHoveringView = false;
+      ring.classList.remove('hover-view');
+      dot.classList.remove('hover-view');
+    });
+  });
+}
+
+// 4. Magnetic Buttons
+function initMagneticButtons() {
+  const magnets = document.querySelectorAll('.hero-cta, .contact-btn, .nav-cta');
+  
+  magnets.forEach(magnet => {
+    magnet.addEventListener('mousemove', (e) => {
+      const rect = magnet.getBoundingClientRect();
+      const h = rect.width / 2;
+      const w = rect.height / 2;
+      const x = e.clientX - rect.left - h;
+      const y = e.clientY - rect.top - w;
+      
+      // The pull strength (higher is weaker pull)
+      const strength = 0.3;
+      
+      magnet.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+    });
+    
+    magnet.addEventListener('mouseleave', () => {
+      magnet.style.transform = 'translate(0px, 0px)';
+    });
+  });
+}
+
+// 5. 3D Tilt Cards
+function init3DTiltCards() {
+  if (window.matchMedia("(pointer: coarse)").matches) return; // Skip on touch devices
+  
+  const cards = document.querySelectorAll('.portfolio-item');
+  
+  cards.forEach(card => {
+    // Wrap card content for 3D effect
+    const children = Array.from(card.childNodes);
+    const wrapper = document.createElement('div');
+    wrapper.className = 'tilt-content';
+    wrapper.style.width = '100%';
+    wrapper.style.height = '100%';
+    wrapper.style.transition = 'transform 0.1s ease';
+    
+    children.forEach(child => wrapper.appendChild(child));
+    card.appendChild(wrapper);
+    card.classList.add('tilt-card');
+    
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((y - centerY) / centerY) * -5; // Max 5 deg rotation
+      const rotateY = ((x - centerX) / centerX) * 5;
+      
+      wrapper.style.transform = `translateZ(30px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      wrapper.style.transform = `translateZ(30px) rotateX(0deg) rotateY(0deg)`;
+      setTimeout(() => {
+        wrapper.style.transition = 'transform 0.3s ease';
+        setTimeout(() => {
+          wrapper.style.transition = 'transform 0.1s ease';
+        }, 300);
+      }, 50);
+    });
+  });
+}
+
+// 6. Text Split & Reveal Animations
+function initTextReveal() {
+  const titles = document.querySelectorAll('.section-title');
+  
+  titles.forEach(title => {
+    // Preserve any existing inner HTML like <em> tags
+    const html = title.innerHTML;
+    let newHtml = '';
+    
+    // Very basic split by word, skipping HTML tags
+    const parts = html.split(/(<[^>]*>)/);
+    
+    parts.forEach(part => {
+      if (part.startsWith('<')) {
+        newHtml += part;
+      } else if (part.trim() !== '') {
+        const words = part.split(' ');
+        words.forEach((word, index) => {
+          if (word === '') return;
+          newHtml += `<span class="split-line">`;
+          for(let i=0; i<word.length; i++) {
+             newHtml += `<span class="split-char">${word[i]}</span>`;
+          }
+          newHtml += `</span> `;
+        });
+      } else {
+        newHtml += part;
+      }
+    });
+    
+    title.innerHTML = newHtml;
+    
+    // Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const chars = entry.target.querySelectorAll('.split-char');
+          chars.forEach((char, i) => {
+            char.style.animationDelay = `${i * 0.03}s`;
+            char.classList.add('revealed');
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    
+    observer.observe(title);
+  });
+}
+
+// 7. Image Reveal Mask
+function initImageReveal() {
+  const images = document.querySelectorAll('.about-image');
+  
+  images.forEach(container => {
+    container.classList.add('reveal-mask');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('revealed');
+          }, 200);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    observer.observe(container);
+  });
+}
+
+// 8. Animated Stat Counters
+function initAnimatedCounters() {
+  const stats = document.querySelectorAll('.stat-number');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const text = el.innerText;
+        const targetNumber = parseInt(text.replace(/[^0-9]/g, ''));
+        const suffix = text.replace(/[0-9]/g, '');
+        
+        // Counter animation
+        let start = 0;
+        const duration = 2000; // 2 seconds
+        const startTime = performance.now();
+        
+        function updateCounter(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function (easeOutExpo)
+          const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          const currentNumber = Math.floor(easeProgress * targetNumber);
+          
+          el.innerText = currentNumber + suffix;
+          
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            el.innerText = targetNumber + suffix;
+          }
+        }
+        
+        requestAnimationFrame(updateCounter);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  stats.forEach(stat => observer.observe(stat));
 }
