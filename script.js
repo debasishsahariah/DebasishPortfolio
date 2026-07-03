@@ -112,6 +112,14 @@ const portfolioItems = [
     images: ["images/personal-13-1.jpg", "images/personal-13-2.jpg", "images/personal-13-3.jpg", "images/personal-13-4.jpg"],
     description: "A high-end commercial 3D campaign designed for Noise wireless open-ear headphones. This project features photorealistic product renders showcasing the iridescent design accents, set against dramatic studio lighting and premium typography for e-commerce and social media marketing.",
   },
+  {
+    id: 104,
+    type: "personal",
+    title: "Xiaomi Sound Outdoor Speaker",
+    category: "Commercial & Advertising",
+    images: ["images/personal-14-1.jpg", "images/personal-14-2.jpg", "images/personal-14-3.jpg", "images/personal-14-4.jpg"],
+    description: "A high-impact product campaign designed for the Xiaomi Sound Outdoor Speaker. These photorealistic renders place the product in natural, rugged environments with dynamic lighting and water droplets to highlight its IP67 durability and outdoor-ready design.",
+  },
 
   // --- CLIENT PROJECTS ---
   {
