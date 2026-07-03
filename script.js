@@ -175,7 +175,7 @@ const portfolioItems = [
     client: "Electronics Brand",
     category: "Product Listing Image",
     image: "images/client-07.jpg",
-    description: "Powerbank with mulitple charging capabilities.",
+    description: "Powerbank with multiple charging capabilities.",
   },
   {
     id: 18,
@@ -250,11 +250,11 @@ const portfolioItems = [
     id: 25,
     type: "video",
     title: "Product Ad Video",
-    client: "food manufacturer",
+    client: "Food Manufacturer",
     category: "Ad campaign video",
     thumbnail: "images/video-thumb-02.png",
     videoUrl: "videos/Sequence 05.mp4",
-    description: "Product advertisement taargeted for kids.",
+    description: "Product advertisement targeted for kids.",
   },
 ];
 
@@ -262,6 +262,7 @@ const portfolioItems = [
 // DOM READY
 // ============================================================
 document.addEventListener("DOMContentLoaded", () => {
+  initPreloader();
   initNavbar();
   initMobileMenu();
   renderPortfolio("all");
@@ -773,4 +774,80 @@ function initTypingEffect() {
   }
 
   type();
+}
+
+// ============================================================
+// PRELOADER
+// ============================================================
+function initPreloader() {
+  const preloader = document.getElementById("preloader");
+  const nameEl = document.getElementById("preloader-name");
+  const barFill = document.getElementById("preloader-bar");
+  const percentEl = document.getElementById("preloader-percent");
+
+  if (!preloader || !nameEl) return;
+
+  // Prevent scrolling during preloader
+  document.body.style.overflow = "hidden";
+
+  // Wrap each character in a span for staggered animation
+  const text = nameEl.innerHTML;
+  let charIndex = 0;
+  let newHTML = "";
+
+  // Parse the innerHTML to handle the <span class="dot-char">.</span> properly
+  const parts = text.split(/(<span[^>]*>.<\/span>)/);
+  parts.forEach((part) => {
+    if (part.startsWith("<span")) {
+      // It's the dot span — wrap the dot inside with animation
+      newHTML += `<span class="char dot-char" style="animation-delay: ${charIndex * 0.06}s">.</span>`;
+      charIndex++;
+    } else {
+      // Regular text — wrap each character
+      for (let i = 0; i < part.length; i++) {
+        if (part[i] === " ") {
+          newHTML += " ";
+        } else {
+          newHTML += `<span class="char" style="animation-delay: ${charIndex * 0.06}s">${part[i]}</span>`;
+        }
+        charIndex++;
+      }
+    }
+  });
+
+  nameEl.innerHTML = newHTML;
+
+  // Animate progress bar
+  let progress = 0;
+  const minDuration = 1800; // Minimum preloader duration in ms
+  const startTime = Date.now();
+
+  function updateProgress() {
+    const elapsed = Date.now() - startTime;
+    const naturalProgress = Math.min((elapsed / minDuration) * 100, 100);
+
+    // Ease-out curve for more natural feel
+    progress = naturalProgress;
+
+    if (barFill) barFill.style.width = `${progress}%`;
+    if (percentEl) percentEl.textContent = `${Math.round(progress)}%`;
+
+    if (progress < 100) {
+      requestAnimationFrame(updateProgress);
+    } else {
+      // Loading complete — hide preloader
+      setTimeout(() => {
+        preloader.classList.add("hidden");
+        document.body.style.overflow = "";
+
+        // Remove preloader from DOM after transition
+        setTimeout(() => {
+          preloader.remove();
+        }, 600);
+      }, 400);
+    }
+  }
+
+  // Start the progress animation
+  requestAnimationFrame(updateProgress);
 }
