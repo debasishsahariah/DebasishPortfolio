@@ -735,6 +735,32 @@ button {
   border-color: var(--gold-primary);
 }
 
+.portfolio-container {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.category-header {
+  margin-bottom: 24px;
+}
+
+.category-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.category-divider-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-gold) 0%, transparent 100%);
+  opacity: 0.5;
+}
+
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

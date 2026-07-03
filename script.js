@@ -321,33 +321,54 @@ function initMobileMenu() {
 // PORTFOLIO RENDERING
 // ============================================================
 function renderPortfolio(filter) {
-  const grid = document.getElementById("portfolio-grid");
-  if (!grid) return;
+  const container = document.getElementById("portfolio-container");
+  if (!container) return;
 
-  const items = filter === "all"
-    ? portfolioItems
-    : portfolioItems.filter((item) => item.type === filter);
+  let html = "";
+  
+  if (filter === "all" || filter === "personal") {
+    html += createCategorySection("Personal Projects", "personal");
+  }
+  if (filter === "all" || filter === "client") {
+    html += createCategorySection("Client Work", "client");
+  }
+  if (filter === "all" || filter === "video") {
+    html += createCategorySection("Video Projects", "video");
+  }
 
-  grid.innerHTML = items
-    .map((item) => {
-      if (item.type === "video") {
-        return createVideoCard(item);
-      }
-      return createImageCard(item);
-    })
-    .join("");
+  container.innerHTML = html;
 
   // Trigger animations
   requestAnimationFrame(() => {
-    grid.querySelectorAll(".portfolio-item").forEach((el, i) => {
+    container.querySelectorAll(".portfolio-item").forEach((el, i) => {
       setTimeout(() => {
         el.classList.add("visible");
-      }, i * 100);
+      }, (i % 15) * 100);
     });
   });
 
   // Reattach event listeners
   attachPortfolioEvents();
+}
+
+function createCategorySection(title, type) {
+  const items = portfolioItems.filter((item) => item.type === type);
+  if (items.length === 0) return "";
+  
+  const itemsHTML = items.map((item) => {
+    if (item.type === "video") return createVideoCard(item);
+    return createImageCard(item);
+  }).join("");
+
+  return `
+    <div class="category-header">
+      <h3 class="category-title">${title}</h3>
+      <div class="category-divider-line"></div>
+    </div>
+    <div class="portfolio-grid">
+      ${itemsHTML}
+    </div>
+  `;
 }
 
 function createImageCard(item) {
